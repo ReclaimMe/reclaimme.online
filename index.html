@@ -1,0 +1,1637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReclaimMe - Browser Extension for Social Media Reputation Management | AI-Powered Digital Cleanup</title>
+    <meta name="description" content="Browser extension that analyzes your Facebook content for reputation risks including party photos and extreme political views. AI-powered cleanup with Google Drive export. First year free.">
+    <meta name="keywords" content="browser extension, social media reputation management, Facebook analyzer, political content detection, party photo scanner, AI reputation checker, digital cleanup tool, Google Drive export, career protection, social media audit, reputation score, browser plugin, Facebook extension, political post detector">
+    
+    <!-- Additional SEO Meta Tags -->
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="ReclaimMe, Inc.">
+    <meta name="rating" content="general">
+    <meta name="revisit-after" content="7 days">
+    <link rel="canonical" href="https://reclaimme.online/">
+    
+    <!-- Open Graph / Social Media Tags -->
+    <meta property="og:title" content="ReclaimMe - Browser Extension for Social Media Reputation Management">
+    <meta property="og:description" content="Browser extension that detects risky Facebook content including party photos and political posts. AI analysis with Google Drive export.">
+    <meta property="og:image" content="https://reclaimme.online/favicon.png">
+    <meta property="og:url" content="https://reclaimme.online">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="ReclaimMe">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="ReclaimMe - Browser Extension for Reputation Management">
+    <meta name="twitter:description" content="Browser extension that analyzes Facebook for reputation risks. Detects party photos, political content, and more.">
+    <meta name="twitter:image" content="https://reclaimme.online/favicon.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png">
+    <link rel="apple-touch-icon" sizes="512x512" href="/favicon.png">
+    
+    <!-- Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "ReclaimMe",
+        "description": "Browser extension for social media reputation management. AI-powered analysis of Facebook content including party photos and political posts with Google Drive export.",
+        "applicationCategory": "BrowserApplication",
+        "browserRequirements": "Chrome, Edge, Firefox",
+        "offers": {
+            "@type": "Offer",
+            "price": "39",
+            "priceCurrency": "USD",
+            "availability": "https://schema.org/InStock",
+            "priceValidUntil": "2025-12-31"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "ReclaimMe, Inc.",
+            "url": "https://reclaimme.online"
+        },
+        "screenshot": "https://reclaimme.online/favicon.png",
+        "downloadUrl": "https://chrome.google.com/webstore/detail/reclaimme",
+        "featureList": [
+            "Browser-based AI analysis",
+            "Facebook content scanning",
+            "Party photo detection",
+            "Political content analysis",
+            "Google Drive export",
+            "Reputation score tracking",
+            "Career risk assessment",
+            "Digital footprint cleanup"
+        ],
+        "keywords": "social media reputation management, AI privacy tool, digital footprint cleaner, local AI analysis, social media scanner"
+    }
+    </script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #22d3ee;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --success: #10b981;
+            --dark: #0f172a;
+            --medium: #1e293b;
+            --light: #f8fafc;
+            --text-light: #94a3b8;
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-dark: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            padding: 0.5rem 0;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--primary);
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background: var(--gradient);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-large {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: var(--gradient-dark);
+            padding: 8rem 2rem 4rem;
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(255,255,255,0.03)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
+            background-size: 100px 100px;
+        }
+
+        .hero-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #a855f7 50%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-content p {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .trust-badges {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .hero-image {
+            position: relative;
+        }
+
+        .app-preview {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            background: linear-gradient(135deg, #1e293b, #334155);
+            padding: 2rem;
+        }
+
+        .floating-card {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .floating-card.risk {
+            top: -20px;
+            right: -20px;
+            animation-delay: 0s;
+        }
+
+        .floating-card.score {
+            bottom: 20px;
+            left: -40px;
+            animation-delay: 1s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        /* Features Section */
+        .features {
+            padding: 5rem 2rem;
+            background: white;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 4rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .section-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-light);
+        }
+
+        .features-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: var(--dark);
+        }
+
+        .feature-description {
+            color: var(--text-light);
+            line-height: 1.6;
+        }
+
+        /* Problem/Solution Section */
+        .problem-solution {
+            padding: 5rem 2rem;
+            background: #f8fafc;
+        }
+
+        .problem-solution-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .problem-box, .solution-box {
+            padding: 3rem;
+            border-radius: 20px;
+        }
+
+        .problem-box {
+            background: linear-gradient(135deg, #fef2f2, #fee2e2);
+            border: 1px solid #fecaca;
+        }
+
+        .solution-box {
+            background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+            border: 1px solid #bbf7d0;
+        }
+
+        .box-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .box-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .problem-box .box-icon {
+            background: rgba(239, 68, 68, 0.1);
+        }
+
+        .solution-box .box-icon {
+            background: rgba(16, 185, 129, 0.1);
+        }
+
+        .box-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+        }
+
+        .problem-box .box-title {
+            color: #dc2626;
+        }
+
+        .solution-box .box-title {
+            color: #059669;
+        }
+
+        .box-list {
+            list-style: none;
+        }
+
+        .box-list li {
+            padding: 0.75rem 0;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            color: #475569;
+        }
+
+        .box-list li::before {
+            content: '×';
+            font-size: 1.5rem;
+            font-weight: bold;
+            line-height: 1;
+        }
+
+        .problem-box .box-list li::before {
+            color: #dc2626;
+        }
+
+        .solution-box .box-list li::before {
+            content: '✓';
+            color: #059669;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            padding: 5rem 2rem;
+            background: white;
+        }
+
+        .steps-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: var(--gradient);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 auto 1.5rem;
+        }
+
+        .step-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: var(--dark);
+        }
+
+        .step-description {
+            color: var(--text-light);
+        }
+
+        .step::after {
+            content: '';
+            position: absolute;
+            top: 30px;
+            left: 60%;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary) 0%, transparent 100%);
+        }
+
+        .step:last-child::after {
+            display: none;
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 5rem 2rem;
+            background: var(--gradient-dark);
+        }
+
+        .pricing .section-title,
+        .pricing .section-subtitle {
+            color: white;
+        }
+
+        .pricing-cards {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .pricing-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2.5rem;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .pricing-card.featured {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--primary);
+            transform: scale(1.05);
+        }
+
+        .pricing-badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gradient);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: bold;
+        }
+
+        .pricing-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .pricing-price {
+            font-size: 3rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-price sup {
+            font-size: 1.5rem;
+        }
+
+        .pricing-period {
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 2rem;
+        }
+
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .pricing-features li {
+            padding: 0.75rem 0;
+            color: rgba(255, 255, 255, 0.9);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+
+        .pricing-features li::before {
+            content: '✓';
+            color: var(--success);
+            font-weight: bold;
+        }
+
+        /* Download Section */
+        .download {
+            padding: 5rem 2rem;
+            background: white;
+        }
+
+        .download-options {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .download-card {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .download-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .platform-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .platform-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .platform-requirements {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            font-size: 0.9rem;
+        }
+
+        /* CTA Section */
+        .cta {
+            padding: 5rem 2rem;
+            background: var(--gradient);
+            text-align: center;
+        }
+
+        .cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .cta-description {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .btn-white {
+            background: white;
+            color: var(--primary);
+        }
+
+        .btn-white:hover {
+            background: #f8fafc;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            padding: 3rem 2rem 2rem;
+            color: white;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .footer-description {
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.6;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+        }
+
+        .footer-section h4 {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .footer-bottom {
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .hero-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+
+            .hero-image {
+                display: none;
+            }
+
+            .problem-solution-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .step::after {
+                display: none;
+            }
+
+            .footer-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .footer-social {
+                justify-content: center;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .slide-in-left {
+            opacity: 0;
+            transform: translateX(-50px);
+            animation: slideInLeft 0.6s ease forwards;
+        }
+
+        @keyframes slideInLeft {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .slide-in-right {
+            opacity: 0;
+            transform: translateX(50px);
+            animation: slideInRight 0.6s ease forwards;
+        }
+
+        @keyframes slideInRight {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Stats Counter */
+        .stats {
+            padding: 3rem 2rem;
+            background: white;
+            border-top: 1px solid #e2e8f0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .stats-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 1rem;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">
+                    <img src="/favicon.png" alt="ReclaimMe" style="width: 40px; height: 40px; border-radius: 8px;">
+                </div>
+                <span>ReclaimMe</span>
+            </a>
+            <div class="nav-links">
+                <a href="#features" class="nav-link">Features</a>
+                <a href="#how-it-works" class="nav-link">How It Works</a>
+                <a href="#pricing" class="nav-link">Pricing</a>
+                <a href="#download" class="nav-link">Download</a>
+                <a href="#download" class="btn btn-primary">Get Started Free</a>
+            </div>
+            <button class="mobile-menu-toggle">☰</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content fade-in">
+                <h1>Clean Up Your <span class="gradient-text">Digital Past</span></h1>
+                <p>Browser extension that analyzes your Facebook content for reputation risks - from party photos to extreme political views. AI-powered analysis with Google Drive export for personal privacy, relationship safety, and professional reputation.</p>
+                
+                <div class="hero-buttons">
+                    <a href="#download" class="btn btn-primary btn-large">
+                        <span>🧩</span> Install Extension
+                    </a>
+                    <a href="#how-it-works" class="btn btn-outline btn-large">
+                        <span>▶</span> Watch Demo
+                    </a>
+                </div>
+
+                <div class="trust-badges">
+                    <div class="trust-badge">
+                        <span>🧩</span>
+                        <span>Browser Extension</span>
+                    </div>
+                    <div class="trust-badge">
+                        <span>🤖</span>
+                        <span>AI-Powered</span>
+                    </div>
+                    <div class="trust-badge">
+                        <span>📅</span>
+                        <span>First Year Free</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hero-image slide-in-right">
+                <div class="app-preview">
+                    <div style="background: rgba(255,255,255,0.05); border-radius: 8px; padding: 1rem; margin-bottom: 1rem;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
+                            <span style="color: rgba(255,255,255,0.6);">Reputation Score</span>
+                            <span style="color: #10b981;">↑ 23%</span>
+                        </div>
+                        <div style="font-size: 3rem; font-weight: bold; color: white;">7.8/10</div>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div style="background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); border-radius: 8px; padding: 1rem;">
+                            <div style="color: #ef4444; font-size: 1.5rem; font-weight: bold;">23</div>
+                            <div style="color: rgba(255,255,255,0.6); font-size: 0.875rem;">High Risk Items</div>
+                        </div>
+                        <div style="background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.3); border-radius: 8px; padding: 1rem;">
+                            <div style="color: #10b981; font-size: 1.5rem; font-weight: bold;">2,847</div>
+                            <div style="color: rgba(255,255,255,0.6); font-size: 0.875rem;">Photos Analyzed</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="floating-card risk">
+                    <div style="color: #ef4444; font-weight: bold;">⚠️ Risk Found</div>
+                    <div style="color: rgba(255,255,255,0.8); font-size: 0.875rem;">Party photo from 2019</div>
+                </div>
+
+                <div class="floating-card" style="top: -20px; left: -80px; animation-delay: 0.5s;">
+                    <div style="color: #ff9800; font-weight: bold;">🗳️ Political Alert</div>
+                    <div style="color: rgba(255,255,255,0.8); font-size: 0.875rem;">Extreme views 2020</div>
+                </div>
+
+                <div class="floating-card score">
+                    <div style="color: #10b981; font-weight: bold;">✓ Cleaned</div>
+                    <div style="color: rgba(255,255,255,0.8); font-size: 0.875rem;">15 items archived</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="stats-container">
+            <div class="stat-item">
+                <div class="stat-number">1 Year</div>
+                <div class="stat-label">Free Facebook Analysis</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">100%</div>
+                <div class="stat-label">Browser-Based</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">$39</div>
+                <div class="stat-label">Lifetime Access</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">5 min</div>
+                <div class="stat-label">Setup & Analysis</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem/Solution Section -->
+    <section class="problem-solution">
+        <div class="section-header">
+            <h2 class="section-title">The Hidden Danger in Your Digital Past</h2>
+            <p class="section-subtitle">What you posted years ago is still defining you today</p>
+        </div>
+
+        <div class="problem-solution-grid">
+            <div class="problem-box slide-in-left">
+                <div class="box-header">
+                    <div class="box-icon">⚠️</div>
+                    <h3 class="box-title">The Problem</h3>
+                </div>
+                <ul class="box-list">
+                    <li>70% of employers check your social media</li>
+                    <li>Party photos from college still haunt you</li>
+                    <li>Extreme political posts damage career prospects</li>
+                    <li>Friends tag you in compromising content</li>
+                    <li>No easy way to find and clean risky posts</li>
+                </ul>
+            </div>
+
+            <div class="solution-box slide-in-right">
+                <div class="box-header">
+                    <div class="box-icon">✓</div>
+                    <h3 class="box-title">The Solution</h3>
+                </div>
+                <ul class="box-list">
+                    <li>AI scans Facebook for reputation risks</li>
+                    <li>Detects party photos and political content</li>
+                    <li>Smart cleanup recommendations</li>
+                    <li>Export summaries to Google Drive</li>
+                    <li>Protect your career and opportunities</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="section-header">
+            <h2 class="section-title">Everything You Need to Reclaim Your Digital Self</h2>
+            <p class="section-subtitle">Professional-grade AI analysis, complete privacy, one simple app</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card fade-in">
+                <div class="feature-icon">🤖</div>
+                <h3 class="feature-title">AI Analysis</h3>
+                <p class="feature-description">Advanced AI models analyze your Facebook content directly in your browser for maximum privacy.</p>
+            </div>
+
+            <div class="feature-card fade-in">
+                <div class="feature-icon">📸</div>
+                <h3 class="feature-title">Content Scanner</h3>
+                <p class="feature-description">AI analyzes photos and posts for reputation risks - party scenes, political rants, compromising content.</p>
+            </div>
+
+            <div class="feature-card fade-in">
+                <div class="feature-icon">📊</div>
+                <h3 class="feature-title">Risk Heat Map</h3>
+                <p class="feature-description">Visual timeline showing your riskiest periods. See exactly what needs attention.</p>
+            </div>
+
+            <div class="feature-card fade-in">
+                <div class="feature-icon">💼</div>
+                <h3 class="feature-title">Industry-Specific</h3>
+                <p class="feature-description">Customized analysis for your career. What's fine for artists might hurt bankers.</p>
+            </div>
+
+            <div class="feature-card fade-in">
+                <div class="feature-icon">📄</div>
+                <h3 class="feature-title">Google Drive Export</h3>
+                <p class="feature-description">Export detailed AI summaries and analysis reports as formatted Word documents to your Google Drive.</p>
+            </div>
+
+            <div class="feature-card fade-in">
+                <div class="feature-icon">🎯</div>
+                <h3 class="feature-title">One-Click Cleanup</h3>
+                <p class="feature-description">Delete risky content, update privacy settings, archive memories - all automated.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section id="how-it-works" class="how-it-works">
+        <div class="section-header">
+            <h2 class="section-title">Get Your Digital Life Under Control in Minutes</h2>
+            <p class="section-subtitle">Simple 4-step process to reclaim your reputation</p>
+        </div>
+
+        <div class="steps-container">
+            <div class="step fade-in">
+                <div class="step-number">1</div>
+                <h3 class="step-title">Install Extension</h3>
+                <p class="step-description">Add ReclaimMe to Chrome, Edge, or Firefox. No account required to start.</p>
+            </div>
+
+            <div class="step fade-in">
+                <div class="step-number">2</div>
+                <h3 class="step-title">Login to Facebook</h3>
+                <p class="step-description">Use your existing Facebook session. Extension analyzes your content directly in the browser.</p>
+            </div>
+
+            <div class="step fade-in">
+                <div class="step-number">3</div>
+                <h3 class="step-title">AI Analysis</h3>
+                <p class="step-description">AI analyzes your content for reputation risks. Your first year on Facebook is completely free.</p>
+            </div>
+
+            <div class="step fade-in">
+                <div class="step-number">4</div>
+                <h3 class="step-title">Clean & Export</h3>
+                <p class="step-description">Delete risky content, export AI summaries to Google Drive. Protect your reputation.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing">
+        <div class="section-header">
+            <h2 class="section-title">Simple, Fair Pricing</h2>
+            <p class="section-subtitle">Try free, then pay once. No subscriptions, no recurring fees.</p>
+        </div>
+
+        <div class="pricing-cards">
+            <div class="pricing-card">
+                <h3 class="pricing-title">Free Tier</h3>
+                <div class="pricing-price">$0</div>
+                <div class="pricing-period">First year on Facebook free</div>
+                <ul class="pricing-features">
+                    <li>Your first year of Facebook posts</li>
+                    <li>Party photo detection</li>
+                    <li>Political content analysis</li>
+                    <li>Basic AI summaries</li>
+                    <li>Google Drive export</li>
+                </ul>
+                <a href="#download" class="btn btn-outline btn-large" style="width: 100%;">Install Extension</a>
+            </div>
+
+            <div class="pricing-card featured">
+                <div class="pricing-badge">BEST VALUE</div>
+                <h3 class="pricing-title">Lifetime License</h3>
+                <div class="pricing-price"><sup>$</sup>39</div>
+                <div class="pricing-period">One-time payment</div>
+                <ul class="pricing-features">
+                    <li>All years of Facebook content</li>
+                    <li>Advanced reputation scoring</li>
+                    <li>Detailed Google Drive reports</li>
+                    <li>Political content deep analysis</li>
+                    <li>Career impact assessment</li>
+                    <li>Automated cleanup suggestions</li>
+                    <li>Priority support</li>
+                </ul>
+                <a href="#" id="purchaseBtn" class="btn btn-primary btn-large" style="width: 100%;">Get Lifetime Access</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section id="download" class="download">
+        <div class="section-header">
+            <h2 class="section-title">Install ReclaimMe Extension</h2>
+            <p class="section-subtitle">Available for Chrome, Edge, and Firefox. No account required to start.</p>
+        </div>
+
+        <div class="download-options">
+            <div class="download-card">
+                <div class="platform-icon">🔵</div>
+                <h3 class="platform-name">Chrome</h3>
+                <p class="platform-requirements">Chrome 88+ or Chromium-based browsers</p>
+                <a href="https://chrome.google.com/webstore/detail/reclaimme" class="btn btn-primary" style="width: 100%;">
+                    <span class="download-text">Add to Chrome</span>
+                </a>
+                <p style="margin-top: 0.5rem; font-size: 0.875rem; color: var(--text-light);">
+                    <span>Works with Chrome, Edge, Brave, Arc</span>
+                </p>
+            </div>
+
+            <div class="download-card">
+                <div class="platform-icon">🦊</div>
+                <h3 class="platform-name">Firefox</h3>
+                <p class="platform-requirements">Firefox 78+ or Firefox-based browsers</p>
+                <a href="https://addons.mozilla.org/firefox/addon/reclaimme" class="btn btn-primary" style="width: 100%;">
+                    <span class="download-text">Add to Firefox</span>
+                </a>
+                <p style="margin-top: 0.5rem; font-size: 0.875rem; color: var(--text-light);">
+                    <span>Works with all Firefox variants</span>
+                </p>
+            </div>
+
+            <div class="download-card">
+                <div class="platform-icon">🔗</div>
+                <h3 class="platform-name">Direct Install</h3>
+                <p class="platform-requirements">For advanced users and testing</p>
+                <a href="#" class="btn btn-primary" style="width: 100%;">
+                    <span class="download-text">Sideload Extension</span>
+                </a>
+                <p style="margin-top: 0.5rem; font-size: 0.875rem; color: var(--text-light);">
+                    <span>GitHub releases and developer mode</span>
+                </p>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 3rem;">
+            <p style="color: var(--text-light); margin-bottom: 1rem;">
+                Need help installing? Check our <a href="/docs/installation" style="color: var(--primary);">extension installation guide</a>
+            </p>
+            <p style="color: var(--text-light);">
+                By downloading, you agree to our <a href="/privacy" style="color: var(--primary);">Privacy Policy</a> and <a href="/terms" style="color: var(--primary);">Terms of Service</a>
+            </p>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="cta-content">
+            <h2 class="cta-title">Ready to Take Control?</h2>
+            <p class="cta-description">Join thousands who've already reclaimed their digital reputation. Start your free analysis in minutes.</p>
+            <div class="cta-buttons">
+                <a href="#download" class="btn btn-white btn-large">Install Extension</a>
+                <a href="mailto:support@reclaimme.online" class="btn btn-outline btn-large" style="border-color: white; color: white;">Contact Support</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-brand">
+                <div class="footer-logo">
+                    <div class="logo-icon">
+                    <img src="/favicon.png" alt="ReclaimMe" style="width: 40px; height: 40px; border-radius: 8px;">
+                </div>
+                    <span>ReclaimMe</span>
+                </div>
+                <p class="footer-description">
+                    AI-powered reputation management that respects your privacy. Your data stays on your device, always.
+                </p>
+                <div class="footer-social">
+                    <a href="https://twitter.com/reclaimme" class="social-link">𝕏</a>
+                    <a href="https://github.com/ReclaimMe/desktop" class="social-link">⚡</a>
+                    <a href="https://discord.gg/reclaimme" class="social-link">💬</a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h4>Product</h4>
+                <ul class="footer-links">
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#pricing">Pricing</a></li>
+                    <li><a href="#download">Download</a></li>
+                    <li><a href="/changelog">Changelog</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Resources</h4>
+                <ul class="footer-links">
+                    <li><a href="/docs">Documentation</a></li>
+                    <li><a href="/blog">Blog</a></li>
+                    <li><a href="/faq">FAQ</a></li>
+                    <li><a href="/api">API</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Company</h4>
+                <ul class="footer-links">
+                    <li><a href="/about">About</a></li>
+                    <li><a href="/privacy">Privacy Policy</a></li>
+                    <li><a href="/terms">Terms of Service</a></li>
+                    <li><a href="mailto:support@reclaimme.online">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2024 ReclaimMe, Inc. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- LemonSqueezy Integration -->
+    <script src="https://app.lemonsqueezy.com/js/lemon.js" defer></script>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', () => {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Animate on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in, .slide-in-left, .slide-in-right').forEach(el => {
+            el.style.animationPlayState = 'paused';
+            observer.observe(el);
+        });
+
+        // Initialize LemonSqueezy
+        window.createLemonSqueezy = function() {
+            // This will be called when user clicks purchase
+            // Configure your LemonSqueezy settings here
+        };
+
+        // Handle purchase button click
+        document.getElementById('purchaseBtn')?.addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Track purchase intent
+            if (typeof trackPurchaseIntent !== 'undefined') {
+                trackPurchaseIntent();
+            }
+            
+            // TODO: Replace with your actual LemonSqueezy checkout URL when ready
+            const checkoutUrl = 'https://your-store.lemonsqueezy.com/checkout/buy/your-product-id';
+            
+            // For now, show coming soon message
+            alert('LemonSqueezy checkout coming soon! You can download the free trial now.');
+            
+            // When ready, uncomment this line and add your checkout URL:
+            // window.open(checkoutUrl, '_blank');
+        });
+
+        // Track downloads with enhanced analytics
+        document.querySelectorAll('.download-card a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const platform = this.closest('.download-card').querySelector('.platform-name').textContent;
+                
+                // Track download with GA4
+                if (typeof trackDownload !== 'undefined') {
+                    trackDownload(platform);
+                }
+                
+                // Track trial start
+                if (typeof trackTrialStart !== 'undefined') {
+                    trackTrialStart();
+                }
+                
+                // Optional: Register trial start with your backend
+                fetch('https://reclaimme.online/api/trial/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        platform: platform,
+                        timestamp: new Date().toISOString(),
+                        utm_source: new URLSearchParams(window.location.search).get('utm_source'),
+                        utm_medium: new URLSearchParams(window.location.search).get('utm_medium'),
+                        utm_campaign: new URLSearchParams(window.location.search).get('utm_campaign')
+                    })
+                }).catch(err => console.log('Trial registration failed'));
+            });
+        });
+        
+        // Track purchase intent clicks
+        document.querySelectorAll('a[href*="lemonsqueezy"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                if (typeof trackPurchaseIntent !== 'undefined') {
+                    trackPurchaseIntent();
+                }
+            });
+        });
+
+        // Mobile menu toggle
+        document.querySelector('.mobile-menu-toggle').addEventListener('click', function() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+        });
+    </script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-0KS3QMQKSF"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        
+        gtag('config', 'G-0KS3QMQKSF', {
+            // Enhanced measurement for better tracking
+            send_page_view: true,
+            allow_google_signals: true,
+            allow_ad_personalization_signals: false, // Privacy-focused
+            anonymize_ip: true // Privacy compliance
+        });
+        
+        // Custom events for conversion tracking
+        function trackDownload(platform) {
+            gtag('event', 'download_app', {
+                'event_category': 'engagement',
+                'event_label': platform,
+                'value': 1
+            });
+        }
+        
+        function trackTrialStart() {
+            gtag('event', 'begin_trial', {
+                'event_category': 'conversion',
+                'value': 1
+            });
+        }
+        
+        function trackPurchaseIntent() {
+            gtag('event', 'purchase_intent', {
+                'event_category': 'conversion',
+                'event_label': 'lifetime_license',
+                'value': 39
+            });
+        }
+        
+        // Track scroll depth for engagement
+        let scrollTracked = false;
+        window.addEventListener('scroll', function() {
+            if (!scrollTracked && (window.scrollY / document.body.scrollHeight) > 0.5) {
+                gtag('event', 'scroll_50_percent', {
+                    'event_category': 'engagement'
+                });
+                scrollTracked = true;
+            }
+        });
+    </script>
+
+    <!-- Platform Detection and Download Script -->
+    <script>
+        async function setupDownloadLinks() {
+            try {
+                // Fetch the latest release info from GitHub API
+                const response = await fetch('https://api.github.com/repos/ReclaimMe/desktop/releases/latest');
+                const release = await response.json();
+                const version = release.tag_name.replace('v', '');
+                const assets = release.assets || [];
+                
+                // Detect platform and architecture
+                const platform = navigator.platform.toLowerCase();
+                const userAgent = navigator.userAgent.toLowerCase();
+                
+                let macArch = 'x64'; // Default to Intel
+                
+                // Detect Apple Silicon
+                if (platform.includes('mac')) {
+                    // Try to detect Apple Silicon
+                    if (userAgent.includes('intel') || userAgent.includes('x86')) {
+                        macArch = 'x64';
+                        document.getElementById('mac-arch-info').textContent = 'Intel Mac';
+                    } else {
+                        // Check for Apple Silicon indicators
+                        const canvas = document.createElement('canvas');
+                        const gl = canvas.getContext('webgl');
+                        const renderer = gl ? gl.getParameter(gl.RENDERER) : '';
+                        
+                        if (renderer.includes('Apple') || userAgent.includes('arm') || 
+                            (navigator.hardwareConcurrency >= 8 && !userAgent.includes('intel'))) {
+                            macArch = 'arm64';
+                            document.getElementById('mac-arch-info').textContent = 'Apple Silicon (M1/M2/M3)';
+                        } else {
+                            document.getElementById('mac-arch-info').textContent = 'Intel Mac (detected)';
+                        }
+                    }
+                }
+                
+                // Function to find asset by pattern
+                function findAsset(patterns) {
+                    for (const pattern of patterns) {
+                        const asset = assets.find(a => a.name.includes(pattern));
+                        if (asset) return asset.browser_download_url;
+                    }
+                    return null;
+                }
+                
+                // Try to find the best matching assets with fallbacks
+                const downloadLinks = {
+                    mac: findAsset([
+                        `ReclaimMe-${version}-mac-${macArch}.dmg`,  // v1.0.12+ format
+                        `ReclaimMe-mac-${macArch}.dmg`,            // Alternative format
+                        'ReclaimMe-mac.dmg',                       // Legacy format
+                        '.dmg'                                     // Any DMG file
+                    ]) || 'https://github.com/ReclaimMe/desktop/releases/latest',
+                    
+                    windows: findAsset([
+                        `ReclaimMe-windows-x64.exe`,               // v1.0.12+ format
+                        'ReclaimMe-Setup.exe',                     // Legacy format 
+                        '.exe'                                     // Any EXE file
+                    ]) || 'https://github.com/ReclaimMe/desktop/releases/latest',
+                    
+                    linux: findAsset([
+                        `ReclaimMe-linux-x64.AppImage`,            // v1.0.12+ format
+                        'ReclaimMe.AppImage',                      // Legacy format
+                        '.AppImage'                                // Any AppImage file
+                    ]) || 'https://github.com/ReclaimMe/desktop/releases/latest'
+                };
+                
+                // Update download links
+                document.querySelector('.download-mac').href = downloadLinks.mac;
+                document.querySelector('.download-windows').href = downloadLinks.windows;  
+                document.querySelector('.download-linux').href = downloadLinks.linux;
+                
+                // Update button text with specific architecture info
+                if (platform.includes('mac')) {
+                    document.querySelector('.download-mac .download-subtext').textContent = 
+                        macArch === 'arm64' ? '(Apple Silicon)' : '(Intel)';
+                }
+                
+                // Auto-highlight the user's platform
+                if (platform.includes('mac')) {
+                    document.querySelector('.download-mac').style.background = 'linear-gradient(135deg, #007AFF, #0056CC)';
+                    document.querySelector('.download-mac').style.transform = 'scale(1.02)';
+                } else if (platform.includes('win')) {
+                    document.querySelector('.download-windows').style.background = 'linear-gradient(135deg, #007AFF, #0056CC)';
+                    document.querySelector('.download-windows').style.transform = 'scale(1.02)';
+                } else if (platform.includes('linux')) {
+                    document.querySelector('.download-linux').style.background = 'linear-gradient(135deg, #007AFF, #0056CC)';
+                    document.querySelector('.download-linux').style.transform = 'scale(1.02)';
+                }
+                
+                console.log(`Platform detected: ${platform}, Mac architecture: ${macArch}`);
+                console.log('Available assets:', assets.map(a => a.name));
+                console.log('Selected download links:', downloadLinks);
+                
+            } catch (error) {
+                console.error('Failed to setup download links:', error);
+                // Fallback to static links pointing to releases page
+                document.querySelector('.download-mac').href = 'https://github.com/ReclaimMe/desktop/releases/latest';
+                document.querySelector('.download-windows').href = 'https://github.com/ReclaimMe/desktop/releases/latest';
+                document.querySelector('.download-linux').href = 'https://github.com/ReclaimMe/desktop/releases/latest';
+            }
+        }
+        
+        // Run when page loads
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', setupDownloadLinks);
+        } else {
+            setupDownloadLinks();
+        }
+    </script>
+</body>
+</html>

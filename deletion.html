@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Deletion Instructions - ReclaimMe</title>
+    <meta name="description" content="Instructions for deleting your data from ReclaimMe - all data is stored locally on your device.">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="512x512" href="/favicon.png">
+    <link rel="apple-touch-icon" sizes="512x512" href="/favicon.png">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #6366f1;
+            --dark: #0f172a;
+            --medium: #1e293b;
+            --light: #f8fafc;
+            --text-light: #94a3b8;
+            --success: #10b981;
+            --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: var(--light);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding: 2rem;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        h1 {
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+
+        .subtitle {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        .content-section {
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .content-section h2 {
+            color: var(--dark);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .content-section h3 {
+            color: var(--primary);
+            margin: 1.5rem 0 1rem 0;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+            border: 1px solid #bbf7d0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .highlight-box h3 {
+            color: var(--success);
+            margin-top: 0;
+        }
+
+        .steps {
+            list-style: none;
+            counter-reset: step-counter;
+        }
+
+        .steps li {
+            counter-increment: step-counter;
+            margin-bottom: 1.5rem;
+            padding-left: 3rem;
+            position: relative;
+        }
+
+        .steps li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 2rem;
+            height: 2rem;
+            background: var(--gradient);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .file-paths {
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin: 1rem 0;
+        }
+
+        .contact-info {
+            background: var(--gradient);
+            color: white;
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .contact-info h3 {
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .contact-link {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            display: inline-block;
+            margin: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .contact-link:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .warning {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            color: #dc2626;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            transform: translateX(-5px);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">
+            ← Back to ReclaimMe
+        </a>
+
+        <div class="header">
+            <div class="logo">
+                <div class="logo-icon">🛡️</div>
+                <span>ReclaimMe</span>
+            </div>
+            <h1>Data Deletion Instructions</h1>
+            <p class="subtitle">How to delete your data from ReclaimMe application</p>
+        </div>
+
+        <div class="highlight-box">
+            <h3>🔒 Privacy First: Your Data Stays Local</h3>
+            <p><strong>Important:</strong> ReclaimMe stores ALL your data locally on your computer. We do not collect, store, or transmit your personal data to our servers. Your social media content, analysis results, and personal information never leave your device.</p>
+        </div>
+
+        <div class="content-section">
+            <h2>🗑️ Complete Data Deletion</h2>
+            <p>Since all data is stored locally on your device, you have complete control over deletion. Follow these steps to permanently remove all ReclaimMe data:</p>
+
+            <h3>Option 1: Uninstall the Application</h3>
+            <ol class="steps">
+                <li><strong>Uninstall ReclaimMe</strong> from your computer using your operating system's standard uninstall process</li>
+                <li><strong>Delete application data folder</strong> (see paths below)</li>
+                <li><strong>Verification:</strong> All your data is now permanently deleted</li>
+            </ol>
+
+            <h3>Option 2: Manual Data Deletion</h3>
+            <ol class="steps">
+                <li><strong>Close the ReclaimMe application</strong> completely</li>
+                <li><strong>Navigate to the data directory</strong> for your operating system</li>
+                <li><strong>Delete the entire ReclaimMe folder</strong></li>
+                <li><strong>Empty your trash/recycle bin</strong> to permanently delete</li>
+            </ol>
+
+            <h3>Data Storage Locations</h3>
+            <p>ReclaimMe stores data in the following locations:</p>
+            
+            <div class="file-paths">
+                <strong>Windows:</strong><br>
+                %APPDATA%\ReclaimMe\<br>
+                C:\Users\[username]\AppData\Roaming\ReclaimMe\<br><br>
+                
+                <strong>macOS:</strong><br>
+                ~/Library/Application Support/ReclaimMe/<br><br>
+                
+                <strong>Linux:</strong><br>
+                ~/.config/ReclaimMe/
+            </div>
+
+            <h3>What Data is Deleted</h3>
+            <p>Deleting the ReclaimMe folder removes:</p>
+            <ul style="margin-left: 2rem; margin-top: 1rem;">
+                <li>All downloaded social media posts and photos</li>
+                <li>AI analysis results and reputation scores</li>
+                <li>Application settings and preferences</li>
+                <li>Local database with your content metadata</li>
+                <li>Archived content in all categories</li>
+                <li>Export files and reports</li>
+                <li>Application logs and usage data</li>
+            </ul>
+        </div>
+
+        <div class="content-section">
+            <h2>🔗 Social Media Connections</h2>
+            <p>ReclaimMe connects to social media platforms using your credentials, but does not store them on our servers:</p>
+            
+            <h3>Revoking Access</h3>
+            <ol class="steps">
+                <li><strong>Facebook:</strong> Go to Settings & Privacy → Settings → Apps and Websites → Remove ReclaimMe</li>
+                <li><strong>Instagram:</strong> No OAuth connection - only username/password used locally</li>
+                <li><strong>Twitter/X:</strong> Go to Settings → Security and account access → Apps and sessions → Revoke ReclaimMe access</li>
+            </ol>
+
+            <div class="warning">
+                <strong>Note:</strong> Since ReclaimMe uses local authentication, revoking access from social media platforms primarily prevents future connections. Your locally stored data must still be deleted manually as described above.
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>📋 Data Processing Information</h2>
+            
+            <h3>What We Process</h3>
+            <ul style="margin-left: 2rem; margin-top: 1rem;">
+                <li><strong>Social Media Content:</strong> Posts, photos, comments, and metadata</li>
+                <li><strong>AI Analysis:</strong> Risk assessments and reputation scoring</li>
+                <li><strong>Usage Metrics:</strong> Application performance and feature usage</li>
+                <li><strong>Error Logs:</strong> Technical information for debugging</li>
+            </ul>
+
+            <h3>Processing Location</h3>
+            <p>All data processing occurs:</p>
+            <ul style="margin-left: 2rem; margin-top: 1rem;">
+                <li>Locally on your device using AI models</li>
+                <li>Without internet connection for analysis</li>
+                <li>Without sending data to external servers</li>
+                <li>Under your complete control and ownership</li>
+            </ul>
+        </div>
+
+        <div class="content-section">
+            <h2>⏱️ Retention Policy</h2>
+            <p>Since all data is stored locally:</p>
+            <ul style="margin-left: 2rem; margin-top: 1rem;">
+                <li><strong>No automatic deletion:</strong> Data persists until you manually delete it</li>
+                <li><strong>No server storage:</strong> We cannot delete data remotely</li>
+                <li><strong>Your control:</strong> You decide when and what to delete</li>
+                <li><strong>Export available:</strong> You can export your data before deletion</li>
+            </ul>
+        </div>
+
+        <div class="contact-info">
+            <h3>Need Help with Data Deletion?</h3>
+            <p>If you need assistance with deleting your data or have questions about our privacy practices:</p>
+            <a href="mailto:privacy@reclaimme.online" class="contact-link">📧 Email Privacy Team</a>
+            <a href="mailto:support@reclaimme.online" class="contact-link">💬 Contact Support</a>
+            <p style="margin-top: 1rem; opacity: 0.9; font-size: 0.9rem;">
+                Response time: Within 48 hours
+            </p>
+        </div>
+
+        <div class="content-section" style="text-align: center; color: var(--text-light);">
+            <p><strong>Last Updated:</strong> December 2024</p>
+            <p>This page fulfills Facebook's Data Deletion Callback URL requirement.</p>
+            <p>© 2024 ReclaimMe, Inc. All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

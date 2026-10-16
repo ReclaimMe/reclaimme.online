@@ -1,0 +1,24 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://reclaimme.online/sitemap.xml
+
+# Allow all major search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+# Crawl delay for politeness
+Crawl-delay: 1
+
+# Key pages for indexing
+Allow: /index.html
+Allow: /deletion.html
+Allow: /privacy.html
+Allow: /terms.html

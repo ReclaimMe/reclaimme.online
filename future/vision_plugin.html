@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReclaimMe Browser Extension Vision</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 10px;
+            margin: 0;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .journey-header {
+            text-align: center;
+            color: white;
+            margin-bottom: 20px;
+            animation: fadeIn 0.8s ease;
+        }
+        
+        .journey-header h1 {
+            font-size: 36px;
+            margin-bottom: 5px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+        
+        .journey-header p {
+            font-size: 16px;
+            opacity: 0.95;
+        }
+        
+        .architecture-info {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            color: white;
+            text-align: center;
+        }
+        
+        .architecture-info h3 {
+            margin-bottom: 15px;
+            font-size: 24px;
+        }
+        
+        .arch-components {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .arch-component {
+            background: rgba(255,255,255,0.1);
+            padding: 15px 20px;
+            border-radius: 10px;
+            min-width: 200px;
+        }
+        
+        .journey-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .step {
+            flex: 1;
+            min-width: 150px;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            position: relative;
+            animation: slideUp 0.6s ease forwards;
+            opacity: 0;
+        }
+        
+        .step:nth-child(1) { animation-delay: 0.1s; }
+        .step:nth-child(2) { animation-delay: 0.2s; }
+        .step:nth-child(3) { animation-delay: 0.3s; }
+        .step:nth-child(4) { animation-delay: 0.4s; }
+        .step:nth-child(5) { animation-delay: 0.5s; }
+        .step:nth-child(6) { animation-delay: 0.6s; }
+        
+        .step:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        
+        .step.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: scale(1.05);
+        }
+        
+        .step-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            line-height: 30px;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .step.active .step-number {
+            background: white;
+            color: #667eea;
+        }
+        
+        .step h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        
+        .step p {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+        
+        .phase-detail {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            display: none;
+            animation: fadeIn 0.5s ease;
+            max-height: 65vh;
+            overflow-y: auto;
+        }
+        
+        .phase-detail.active {
+            display: block;
+        }
+        
+        .phase-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .phase-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            font-size: 28px;
+        }
+        
+        .phase-title h2 {
+            font-size: 32px;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .phase-title p {
+            color: #666;
+            font-size: 16px;
+        }
+        
+        .browser-mockup {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 0;
+            margin: 20px 0;
+            border: 2px solid #e0e0e0;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .browser-header {
+            background: #e8e8e8;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #d0d0d0;
+        }
+        
+        .browser-controls {
+            display: flex;
+            gap: 8px;
+            margin-right: 20px;
+        }
+        
+        .browser-control {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        
+        .browser-control.red { background: #ff5f56; }
+        .browser-control.yellow { background: #ffbd2e; }
+        .browser-control.green { background: #27c93f; }
+        
+        .browser-url {
+            flex: 1;
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 4px 10px;
+            font-size: 12px;
+            color: #666;
+        }
+        
+        .facebook-page {
+            background: #1877f2;
+            color: white;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .facebook-logo {
+            font-size: 32px;
+            font-weight: bold;
+        }
+        
+        .extension-overlay {
+            position: relative;
+            background: white;
+            margin: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+        }
+        
+        .extension-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 12px 12px 0 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .extension-content {
+            padding: 20px;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border-radius: 8px;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+        
+        .btn-success {
+            background: #28a745;
+            color: white;
+        }
+        
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: #f0f0f0;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            animation: progressAnimation 2s ease-out;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .stat-card {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
+        }
+        
+        .risk-item {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: #fff;
+            border-radius: 8px;
+            margin: 8px 0;
+            border-left: 4px solid #dc3545;
+        }
+        
+        .risk-item.medium {
+            border-left-color: #ffc107;
+        }
+        
+        .risk-item.low {
+            border-left-color: #28a745;
+        }
+        
+        .risk-preview {
+            width: 40px;
+            height: 40px;
+            background: #e9ecef;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 12px;
+            font-size: 18px;
+        }
+        
+        .risk-content {
+            flex: 1;
+        }
+        
+        .risk-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .risk-description {
+            font-size: 13px;
+            color: #666;
+        }
+        
+        .risk-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 12px;
+            border-radius: 4px;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes progressAnimation {
+            from { width: 0; }
+        }
+        
+        .desktop-connection {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border: 2px solid #2196f3;
+            border-radius: 12px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        
+        .desktop-connection h4 {
+            color: #1565c0;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .connection-status {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+        }
+        
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #4caf50;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="journey-header">
+            <h1>🔐 ReclaimMe Browser Extension</h1>
+            <p>AI-powered analysis of your Facebook content - party photos, political posts, and reputation risks</p>
+        </div>
+        
+        <div class="architecture-info">
+            <h3>🏗️ Browser-Only Architecture</h3>
+            <div class="arch-components">
+                <div class="arch-component">
+                    <div style="font-size: 24px; margin-bottom: 8px;">🌐</div>
+                    <strong>Browser Extension</strong><br>
+                    <small>Content analysis, AI processing, UI</small>
+                </div>
+                <div class="arch-component">
+                    <div style="font-size: 24px; margin-bottom: 8px;">🤖</div>
+                    <strong>WebLLM AI</strong><br>
+                    <small>In-browser AI analysis</small>
+                </div>
+                <div class="arch-component">
+                    <div style="font-size: 24px; margin-bottom: 8px;">📄</div>
+                    <strong>Google Drive</strong><br>
+                    <small>Export summaries & reports</small>
+                </div>
+            </div>
+        </div>
+        
+        <div class="journey-steps">
+            <div class="step active" onclick="showPhase(1)">
+                <span class="step-number">1</span>
+                <h3>Install</h3>
+                <p>Desktop + Extension</p>
+            </div>
+            <div class="step" onclick="showPhase(2)">
+                <span class="step-number">2</span>
+                <h3>Login</h3>
+                <p>Facebook Session</p>
+            </div>
+            <div class="step" onclick="showPhase(3)">
+                <span class="step-number">3</span>
+                <h3>Analyze</h3>
+                <p>AI Content Scan</p>
+            </div>
+            <div class="step" onclick="showPhase(4)">
+                <span class="step-number">4</span>
+                <h3>Report</h3>
+                <p>Risk Assessment</p>
+            </div>
+            <div class="step" onclick="showPhase(5)">
+                <span class="step-number">5</span>
+                <h3>Export</h3>
+                <p>Google Drive Docs</p>
+            </div>
+            <div class="step" onclick="showPhase(6)">
+                <span class="step-number">6</span>
+                <h3>Clean</h3>
+                <p>Remove Risky Content</p>
+            </div>
+        </div>
+        
+        <!-- Phase 1: Install -->
+        <div class="phase-detail active" id="phase-1">
+            <div class="phase-header">
+                <div class="phase-icon">📦</div>
+                <div class="phase-title">
+                    <h2>Simple Browser Extension Install</h2>
+                    <p>Add to Chrome, Edge, or Firefox in seconds</p>
+                </div>
+            </div>
+            
+            <div class="browser-mockup">
+                <div class="browser-header">
+                    <div class="browser-controls">
+                        <div class="browser-control red"></div>
+                        <div class="browser-control yellow"></div>
+                        <div class="browser-control green"></div>
+                    </div>
+                    <div class="browser-url">Chrome Web Store - ReclaimMe Extension</div>
+                </div>
+                
+                <div style="padding: 40px; text-align: center;">
+                    <div style="font-size: 60px; margin-bottom: 20px;">🧩</div>
+                    <h3 style="margin-bottom: 20px;">Adding ReclaimMe Extension</h3>
+                    
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 95%;">95% - Extension ready to use...</div>
+                    </div>
+                    
+                    <div style="background: #e8f5e8; padding: 20px; border-radius: 10px; margin: 20px 0; text-align: left;">
+                        <h4 style="color: #2e7d32; margin-bottom: 15px;">✅ Extension Setup:</h4>
+                        <div style="color: #2e7d32; margin: 8px 0;">✓ Extension downloaded and installed</div>
+                        <div style="color: #2e7d32; margin: 8px 0;">✓ WebLLM AI models loaded</div>
+                        <div style="color: #2e7d32; margin: 8px 0;">✓ Facebook permissions granted</div>
+                        <div style="color: #2e7d32; margin: 8px 0;">✓ Google Drive integration ready</div>
+                        <div style="color: #f57c00; margin: 8px 0;">⏳ Finalizing setup...</div>
+                    </div>
+                    
+                    <div style="background: #fff3cd; padding: 15px; border-radius: 8px;">
+                        <p style="color: #856404; font-weight: 600;">Next: Navigate to Facebook to begin analysis</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn btn-primary" onclick="showPhase(2)">Next: Login to Facebook →</button>
+            </div>
+        </div>
+        
+        <!-- Phase 2: Connect -->
+        <div class="phase-detail" id="phase-2">
+            <div class="phase-header">
+                <div class="phase-icon">🔌</div>
+                <div class="phase-title">
+                    <h2>Extension Connected to Desktop</h2>
+                    <p>Secure native messaging established</p>
+                </div>
+            </div>
+            
+            <div class="browser-mockup">
+                <div class="browser-header">
+                    <div class="browser-controls">
+                        <div class="browser-control red"></div>
+                        <div class="browser-control yellow"></div>
+                        <div class="browser-control green"></div>
+                    </div>
+                    <div class="browser-url">chrome://extensions/ - ReclaimMe Extension</div>
+                </div>
+                
+                <div style="padding: 30px;">
+                    <div style="display: flex; align-items: center; gap: 20px; margin-bottom: 30px;">
+                        <div style="width: 64px; height: 64px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 32px;">🛡️</div>
+                        <div>
+                            <h3 style="margin-bottom: 5px;">ReclaimMe Privacy Extension</h3>
+                            <p style="color: #666;">AI-powered social media reputation management</p>
+                            <div style="margin-top: 8px; color: #28a745; font-weight: 600;">✅ Extension activated and connected</div>
+                        </div>
+                    </div>
+                    
+                    <div class="desktop-connection">
+                        <h4>🖥️ Desktop App Connection</h4>
+                        <div class="connection-status">
+                            <span class="status-dot"></span>
+                            <span>Connected to ReclaimMe Desktop</span>
+                            <span style="margin-left: auto; color: #666;">DeepSeek AI Ready</span>
+                        </div>
+                        <p style="margin-top: 10px; color: #666; font-size: 13px;">
+                            Extension can send data to desktop app for local AI processing. No cloud servers involved.
+                        </p>
+                    </div>
+                    
+                    <div style="background: #e3f2fd; padding: 15px; border-radius: 8px; margin-top: 20px;">
+                        <h4 style="color: #1565c0; margin-bottom: 10px;">🔒 Privacy Guarantee</h4>
+                        <ul style="color: #1565c0; padding-left: 20px; margin: 0;">
+                            <li>Extension runs in your browser only</li>
+                            <li>Data sent to local desktop app via secure messaging</li>
+                            <li>No cloud servers, no data uploads</li>
+                            <li>You control everything</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn btn-secondary" onclick="showPhase(1)">← Back</button>
+                <button class="btn btn-primary" onclick="showPhase(3)">Next: Start Extraction →</button>
+            </div>
+        </div>
+        
+        <!-- Phase 3: Extract -->
+        <div class="phase-detail" id="phase-3">
+            <div class="phase-header">
+                <div class="phase-icon">📥</div>
+                <div class="phase-title">
+                    <h2>In-Browser Content Extraction</h2>
+                    <p>Extension extracts from real Facebook session</p>
+                </div>
+            </div>
+            
+            <div class="browser-mockup">
+                <div class="browser-header">
+                    <div class="browser-controls">
+                        <div class="browser-control red"></div>
+                        <div class="browser-control yellow"></div>
+                        <div class="browser-control green"></div>
+                    </div>
+                    <div class="browser-url">facebook.com/me/allactivity - Your Facebook Activity</div>
+                </div>
+                
+                <div class="facebook-page">
+                    <div class="facebook-logo">f</div>
+                    <div>
+                        <div style="font-size: 18px; font-weight: 600;">Facebook Activity Log</div>
+                        <div style="opacity: 0.8;">Viewing your posts and activity</div>
+                    </div>
+                </div>
+                
+                <div class="extension-overlay">
+                    <div class="extension-header">
+                        <div style="font-size: 20px;">🛡️</div>
+                        <div>
+                            <div style="font-weight: 600;">ReclaimMe is extracting your content</div>
+                            <div style="opacity: 0.9; font-size: 13px;">All processing happens locally</div>
+                        </div>
+                    </div>
+                    
+                    <div class="extension-content">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 67%;">Processing 2019 content...</div>
+                        </div>
+                        
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-number">847</div>
+                                <div class="stat-label">Posts Found</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number">2,341</div>
+                                <div class="stat-label">Photos Scanned</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number">423</div>
+                                <div class="stat-label">Comments Gathered</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number">156</div>
+                                <div class="stat-label">Contexts Analyzed</div>
+                            </div>
+                        </div>
+                        
+                        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin-top: 15px;">
+                            <h4 style="margin-bottom: 10px; color: #333;">🌐 Transparent Extraction Process</h4>
+                            <div style="background: white; padding: 12px; border-radius: 6px; margin: 8px 0; font-size: 13px; color: #666;">
+                                🔄 <strong>Navigating:</strong> facebook.com/me/allactivity?year=2019&month=3
+                            </div>
+                            <div style="background: white; padding: 12px; border-radius: 6px; margin: 8px 0; font-size: 13px; color: #666;">
+                                📥 <strong>Extracting:</strong> Spring Break album metadata (23 photos found)
+                            </div>
+                            <div style="background: white; padding: 12px; border-radius: 6px; margin: 8px 0; font-size: 13px; color: #666;">
+                                🧠 <strong>AI Analyzing:</strong> Context + risk assessment in progress...
+                            </div>
+                            <p style="font-size: 12px; color: #888; margin-top: 10px; font-style: italic;">You can watch Facebook navigation happen in real-time</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn btn-secondary" onclick="showPhase(2)">← Back</button>
+                <button class="btn btn-primary" onclick="showPhase(4)">Next: AI Analysis →</button>
+            </div>
+        </div>
+        
+        <!-- Phase 4: Analyze -->
+        <div class="phase-detail" id="phase-4">
+            <div class="phase-header">
+                <div class="phase-icon">🤖</div>
+                <div class="phase-title">
+                    <h2>DeepSeek AI Processing Locally</h2>
+                    <p>Desktop app analyzes content with advanced AI</p>
+                </div>
+            </div>
+            
+            <div class="browser-mockup">
+                <div class="browser-header">
+                    <div class="browser-controls">
+                        <div class="browser-control red"></div>
+                        <div class="browser-control yellow"></div>
+                        <div class="browser-control green"></div>
+                    </div>
+                    <div class="browser-url">facebook.com/me/allactivity - ReclaimMe AI Analysis</div>
+                </div>
+                
+                <div style="background: #1a1a1a; color: white; padding: 20px;">
+                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+                        <div style="font-size: 28px;">🧠</div>
+                        <div>
+                            <div style="font-size: 16px; font-weight: 600;">ReclaimMe Desktop - DeepSeek AI Processing</div>
+                            <div style="opacity: 0.7; font-size: 13px;">Local AI analysis in progress...</div>
+                        </div>
+                    </div>
+                    
+                    <div style="background: #2a2a2a; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                        <div style="color: #4fc3f7; margin-bottom: 8px;">🤖 DeepSeek R1 7B Model Active</div>
+                        <div style="font-size: 13px; opacity: 0.8;">Processing batch 47 of 89 - Spring Break 2019 photos</div>
+                    </div>
+                    
+                    <div style="background: #2a2a2a; padding: 15px; border-radius: 8px;">
+                        <div style="color: #ffab40; margin-bottom: 8px;">⚠️ Risk Analysis Results</div>
+                        <div style="font-size: 13px; margin: 5px 0;">• High risk: Beer pong tournament photos (Career impact: HIGH)</div>
+                        <div style="font-size: 13px; margin: 5px 0;">• Medium risk: Late-night emotional posts during breakup</div>
+                        <div style="font-size: 13px; margin: 5px 0;">• Timeline issue: Resume vs. social media activity mismatch</div>
+                    </div>
+                </div>
+                
+                <div class="extension-overlay">
+                    <div class="extension-header">
+                        <div style="font-size: 20px;">🛡️</div>
+                        <div>
+                            <div style="font-weight: 600;">Receiving AI Analysis Results</div>
+                            <div style="opacity: 0.9; font-size: 13px;">45% complete - identifying reputation risks</div>
+                        </div>
+                    </div>
+                    
+                    <div class="extension-content">
+                        <div style="background: #fff3cd; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                            <h4 style="color: #856404; margin-bottom: 10px;">🧠 AI Insights + Content Inspection</h4>
+                            <div style="color: #666; font-size: 14px; margin: 5px 0;">• <a href="#" onclick="alert('Opens full context view of Spring Break photo in original Facebook context with comments, post thread, and timeline placement'); return false;" style="color: #667eea; text-decoration: underline;">Inspect Spring Break photo</a> → Risk: HIGH (career impact)</div>
+                            <div style="color: #666; font-size: 14px; margin: 5px 0;">• Cross-referencing timeline with employment claims</div>
+                            <div style="color: #666; font-size: 14px; margin: 5px 0;">• Analyzing comment contexts (23/67 complete)</div>
+                        </div>
+                        
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 45%;">45% - AI Processing</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn btn-secondary" onclick="showPhase(3)">← Back</button>
+                <button class="btn btn-primary" onclick="showPhase(5)">Next: View Results →</button>
+            </div>
+        </div>
+        
+        <!-- Phase 5: Visualize -->
+        <div class="phase-detail" id="phase-5">
+            <div class="phase-header">
+                <div class="phase-icon">📊</div>
+                <div class="phase-title">
+                    <h2>Extension Dashboard with Insights</h2>
+                    <p>Rich visualizations and AI assessments in your browser</p>
+                </div>
+            </div>
+            
+            <div class="browser-mockup">
+                <div class="browser-header">
+                    <div class="browser-controls">
+                        <div class="browser-control red"></div>
+                        <div class="browser-control yellow"></div>
+                        <div class="browser-control green"></div>
+                    </div>
+                    <div class="browser-url">facebook.com/me/allactivity - ReclaimMe Analysis Results</div>
+                </div>
+                
+                <div class="facebook-page">
+                    <div class="facebook-logo">f</div>
+                    <div>
+                        <div style="font-size: 18px; font-weight: 600;">Your Facebook Activity</div>
+                        <div style="opacity: 0.8;">Analyzed by ReclaimMe AI</div>
+                    </div>
+                </div>
+                
+                <div class="extension-overlay">
+                    <div class="extension-header">
+                        <div style="font-size: 20px;">🛡️</div>
+                        <div>
+                            <div style="font-weight: 600;">Your Digital Reputation Report</div>
+                            <div style="opacity: 0.9; font-size: 13px;">AI analysis complete - 3,611 items processed</div>
+                        </div>
+                    </div>
+                    
+                    <div class="extension-content">
+                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 20px;">
+                            <div class="stat-card" style="background: #ffebee;">
+                                <div style="color: #d32f2f; font-size: 20px; font-weight: bold;">23</div>
+                                <div class="stat-label" style="color: #d32f2f;">High Risk</div>
+                            </div>
+                            <div class="stat-card" style="background: #fff3e0;">
+                                <div style="color: #f57c00; font-size: 20px; font-weight: bold;">67</div>
+                                <div class="stat-label" style="color: #f57c00;">Medium Risk</div>
+                            </div>
+                            <div class="stat-card" style="background: #e8f5e8;">
+                                <div style="color: #388e3c; font-size: 20px; font-weight: bold;">3,521</div>
+                                <div class="stat-label" style="color: #388e3c;">Safe Content</div>
+                            </div>
+                            <div class="stat-card" style="background: #e3f2fd;">
+                                <div style="color: #1976d2; font-size: 20px; font-weight: bold;">4.2</div>
+                                <div class="stat-label" style="color: #1976d2;">Rep Score</div>
+                            </div>
+                        </div>
+                        
+                        <div style="background: white; padding: 20px; border-radius: 10px; margin: 20px 0;">
+                            <h3 style="margin-bottom: 20px;">📅 Reputation Timeline (Click to explore)</h3>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 20px;">
+                                <div style="flex: 1; padding: 10px; text-align: center; border-radius: 8px; margin: 0 2px; cursor: pointer; transition: all 0.3s ease; font-weight: 600; color: white; background: #27c93f;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">2024</div>
+                                <div style="flex: 1; padding: 10px; text-align: center; border-radius: 8px; margin: 0 2px; cursor: pointer; transition: all 0.3s ease; font-weight: 600; color: white; background: #27c93f;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">2023</div>
+                                <div style="flex: 1; padding: 10px; text-align: center; border-radius: 8px; margin: 0 2px; cursor: pointer; transition: all 0.3s ease; font-weight: 600; color: white; background: #27c93f;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">2022</div>
+                                <div style="flex: 1; padding: 10px; text-align: center; border-radius: 8px; margin: 0 2px; cursor: pointer; transition: all 0.3s ease; font-weight: 600; color: white; background: #ffbd2e;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">2021</div>
+                                <div style="flex: 1; padding: 10px; text-align: center; border-radius: 8px; margin: 0 2px; cursor: pointer; transition: all 0.3s ease; font-weight: 600; color: white; background: #ffbd2e;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">2020</div>
+                                <div style="flex: 1; padding: 10px; text-align: center; border-radius: 8px; margin: 0 2px; cursor: pointer; transition: all 0.3s ease; font-weight: 600; color: white; background: #ff5f56;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">2019</div>
+                                <div style="flex: 1; padding: 10px; text-align: center; border-radius: 8px; margin: 0 2px; cursor: pointer; transition: all 0.3s ease; font-weight: 600; color: white; background: #ff5f56;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">2018</div>
+                                <div style="flex: 1; padding: 10px; text-align: center; border-radius: 8px; margin: 0 2px; cursor: pointer; transition: all 0.3s ease; font-weight: 600; color: white; background: #ffbd2e;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">2017</div>
+                                <div style="flex: 1; padding: 10px; text-align: center; border-radius: 8px; margin: 0 2px; cursor: pointer; transition: all 0.3s ease; font-weight: 600; color: white; background: #27c93f;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">2016</div>
+                                <div style="flex: 1; padding: 10px; text-align: center; border-radius: 8px; margin: 0 2px; cursor: pointer; transition: all 0.3s ease; font-weight: 600; color: white; background: #27c93f;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">2015</div>
+                            </div>
+                            <p style="text-align: center; color: #666; margin-top: 10px;">
+                                🔴 High Risk Period &nbsp;&nbsp; 🟡 Moderate Risk &nbsp;&nbsp; 🟢 Low Risk
+                            </p>
+                        </div>
+                        
+                        <div style="background: #ffebee; border-radius: 10px; padding: 15px; margin-bottom: 15px;">
+                            <h4 style="color: #d32f2f; margin-bottom: 12px; font-size: 14px;">🚨 TOP RISKS - IMMEDIATE ATTENTION</h4>
+                            
+                            <div class="risk-item">
+                                <div class="risk-preview">🍺</div>
+                                <div class="risk-content">
+                                    <div class="risk-title">Spring Break 2019 Album</div>
+                                    <div class="risk-description">8 photos with alcohol, party setting - HIGH career impact</div>
+                                </div>
+                                <div class="risk-actions">
+                                    <button class="btn btn-danger btn-small">Delete</button>
+                                    <button class="btn btn-secondary btn-small" onclick="alert('Opens photo in Facebook context with full post thread, comments, and timeline placement for review'); return false;">Inspect</button>
+                                </div>
+                            </div>
+                            
+                            <div class="risk-item">
+                                <div class="risk-preview">💬</div>
+                                <div class="risk-content">
+                                    <div class="risk-title">Political Rants (2020)</div>
+                                    <div class="risk-description">15 heated political comments - workplace friction risk</div>
+                                </div>
+                                <div class="risk-actions">
+                                    <button class="btn btn-danger btn-small">Delete</button>
+                                    <button class="btn btn-secondary btn-small">Review</button>
+                                </div>
+                            </div>
+                            
+                            <div class="risk-item">
+                                <div class="risk-preview">📅</div>
+                                <div class="risk-content">
+                                    <div class="risk-title">Timeline Inconsistency</div>
+                                    <div class="risk-description">Resume claims don't match social media activity</div>
+                                </div>
+                                <div class="risk-actions">
+                                    <button class="btn btn-primary btn-small">Fix</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div style="background: #e8f5e8; padding: 15px; border-radius: 8px;">
+                            <h4 style="color: #2e7d32; margin-bottom: 8px; font-size: 14px;">✅ POSITIVE INSIGHTS</h4>
+                            <p style="color: #2e7d32; font-size: 13px; margin: 4px 0;">• Strong professional growth since 2021</p>
+                            <p style="color: #2e7d32; font-size: 13px; margin: 4px 0;">• Family-oriented content shows stability</p>
+                            <p style="color: #2e7d32; font-size: 13px; margin: 4px 0;">• Consistent charitable activity demonstrates values</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn btn-secondary" onclick="showPhase(4)">← Back</button>
+                <button class="btn btn-primary" onclick="showPhase(6)">Take Action →</button>
+            </div>
+        </div>
+        
+        <!-- Phase 6: Act -->
+        <div class="phase-detail" id="phase-6">
+            <div class="phase-header">
+                <div class="phase-icon">⚡</div>
+                <div class="phase-title">
+                    <h2>Automated Reputation Cleanup</h2>
+                    <p>Extension executes actions directly on Facebook</p>
+                </div>
+            </div>
+            
+            <div class="browser-mockup">
+                <div class="browser-header">
+                    <div class="browser-controls">
+                        <div class="browser-control red"></div>
+                        <div class="browser-control yellow"></div>
+                        <div class="browser-control green"></div>
+                    </div>
+                    <div class="browser-url">facebook.com/me/allactivity - ReclaimMe Auto-Cleanup</div>
+                </div>
+                
+                <div class="facebook-page">
+                    <div class="facebook-logo">f</div>
+                    <div>
+                        <div style="font-size: 18px; font-weight: 600;">Facebook Activity Log</div>
+                        <div style="opacity: 0.8;">ReclaimMe is cleaning up your content</div>
+                    </div>
+                </div>
+                
+                <div class="extension-overlay">
+                    <div class="extension-header">
+                        <div style="font-size: 20px;">⚡</div>
+                        <div>
+                            <div style="font-weight: 600;">Automated Cleanup in Progress</div>
+                            <div style="opacity: 0.9; font-size: 13px;">Following your deletion preferences</div>
+                        </div>
+                    </div>
+                    
+                    <div class="extension-content">
+                        <div style="background: #ffebee; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                            <h4 style="color: #c62828; margin-bottom: 15px;">🚨 High Priority - Select content to delete</h4>
+                            <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 15px;">
+                                <div style="aspect-ratio: 1; background: #e0e0e0; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 24px; position: relative; cursor: pointer; transition: all 0.3s ease; border: 3px solid #ff5f56;" onclick="this.querySelector('.selection-checkbox').checked = !this.querySelector('.selection-checkbox').checked; this.style.opacity = this.querySelector('.selection-checkbox').checked ? '0.7' : '1';">
+                                    🍺
+                                    <span style="position: absolute; top: -5px; right: -5px; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: bold; color: white; background: #ff5f56;">!</span>
+                                    <input type="checkbox" class="selection-checkbox" style="position: absolute; top: 5px; left: 5px;" checked>
+                                </div>
+                                <div style="aspect-ratio: 1; background: #e0e0e0; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 24px; position: relative; cursor: pointer; transition: all 0.3s ease; border: 3px solid #ff5f56;" onclick="this.querySelector('.selection-checkbox').checked = !this.querySelector('.selection-checkbox').checked; this.style.opacity = this.querySelector('.selection-checkbox').checked ? '0.7' : '1';">
+                                    🎉
+                                    <span style="position: absolute; top: -5px; right: -5px; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: bold; color: white; background: #ff5f56;">!</span>
+                                    <input type="checkbox" class="selection-checkbox" style="position: absolute; top: 5px; left: 5px;" checked>
+                                </div>
+                                <div style="aspect-ratio: 1; background: #e0e0e0; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 24px; position: relative; cursor: pointer; transition: all 0.3s ease; border: 3px solid #ffbd2e;" onclick="this.querySelector('.selection-checkbox').checked = !this.querySelector('.selection-checkbox').checked; this.style.opacity = this.querySelector('.selection-checkbox').checked ? '0.7' : '1';">
+                                    🏖️
+                                    <span style="position: absolute; top: -5px; right: -5px; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: bold; color: white; background: #ffbd2e;">⚠</span>
+                                    <input type="checkbox" class="selection-checkbox" style="position: absolute; top: 5px; left: 5px;">
+                                </div>
+                                <div style="aspect-ratio: 1; background: #e0e0e0; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 24px; position: relative; cursor: pointer; transition: all 0.3s ease; border: 3px solid #ff5f56;" onclick="this.querySelector('.selection-checkbox').checked = !this.querySelector('.selection-checkbox').checked; this.style.opacity = this.querySelector('.selection-checkbox').checked ? '0.7' : '1';">
+                                    🍻
+                                    <span style="position: absolute; top: -5px; right: -5px; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: bold; color: white; background: #ff5f56;">!</span>
+                                    <input type="checkbox" class="selection-checkbox" style="position: absolute; top: 5px; left: 5px;" checked>
+                                </div>
+                                <div style="aspect-ratio: 1; background: #e0e0e0; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 24px; position: relative; cursor: pointer; transition: all 0.3s ease;">
+                                    📸
+                                    <input type="checkbox" class="selection-checkbox" style="position: absolute; top: 5px; left: 5px;">
+                                </div>
+                            </div>
+                            <p style="margin-bottom: 15px; color: #666;">
+                                <input type="checkbox" checked style="margin-right: 8px;">
+                                <strong>3 of 5 items selected</strong> - 23 photos and 15 posts that could impact job opportunities
+                            </p>
+                            <div style="display: flex; gap: 10px; margin-top: 15px;">
+                                <button style="background: #dc3545; color: white; border: none; padding: 8px 16px; border-radius: 6px; font-weight: 600; cursor: pointer;">Delete Selected (3)</button>
+                                <button style="background: #6c757d; color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer;">Select All</button>
+                                <button style="background: #f8f9fa; color: #333; border: 1px solid #ddd; padding: 8px 16px; border-radius: 6px; cursor: pointer;">Archive Instead</button>
+                            </div>
+                        </div>
+                        
+                        <div style="background: #fff3cd; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                            <h4 style="color: #856404; margin-bottom: 10px;">🤖 Actions You Approved</h4>
+                            <div style="color: #666; font-size: 14px; margin: 5px 0;">✓ Delete 23 high-risk party photos</div>
+                            <div style="color: #666; font-size: 14px; margin: 5px 0;">✓ Hide 15 political rant comments</div>
+                            <div style="color: #666; font-size: 14px; margin: 5px 0;">✓ Archive 847 family memories privately</div>
+                            <div style="color: #666; font-size: 14px; margin: 5px 0;">✓ Update privacy settings on 156 photos</div>
+                        </div>
+                        
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 78%;">78% - Processing deletions...</div>
+                        </div>
+                        
+                        <div style="background: #f8f9fa; padding: 15px; border-radius: 8px; margin: 15px 0;">
+                            <h4 style="margin-bottom: 10px; color: #333;">🔄 Real-time Facebook Navigation</h4>
+                            <div style="background: white; padding: 10px; border-radius: 6px; margin: 6px 0; font-size: 12px; color: #666;">
+                                🌐 Navigating to: facebook.com/photo.php?fbid=123456789
+                            </div>
+                            <div style="background: white; padding: 10px; border-radius: 6px; margin: 6px 0; font-size: 12px; color: #666;">
+                                🗑️ Clicking delete → Confirming → ✅ "Beer pong championship" deleted
+                            </div>
+                            <div style="background: white; padding: 10px; border-radius: 6px; margin: 6px 0; font-size: 12px; color: #666;">
+                                ⏭️ Next: Navigate to political comment thread from March 2020...
+                            </div>
+                        </div>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 20px;">
+                            <div class="stat-card" style="background: #e8f5e8;">
+                                <div style="color: #388e3c; font-size: 18px; font-weight: bold;">156</div>
+                                <div class="stat-label" style="color: #388e3c;">Items Cleaned</div>
+                            </div>
+                            <div class="stat-card" style="background: #e3f2fd;">
+                                <div style="color: #1976d2; font-size: 18px; font-weight: bold;">4.2 → 8.7</div>
+                                <div class="stat-label" style="color: #1976d2;">Rep Score</div>
+                            </div>
+                        </div>
+                        
+                        <div style="background: #e8f5e8; padding: 15px; border-radius: 8px; margin-top: 15px;">
+                            <h4 style="color: #2e7d32; margin-bottom: 8px; font-size: 14px;">🎉 IMPACT PREVIEW</h4>
+                            <p style="color: #2e7d32; font-size: 13px; margin: 4px 0;">• Employment risk: HIGH → LOW</p>
+                            <p style="color: #2e7d32; font-size: 13px; margin: 4px 0;">• Professional image: 3/10 → 8/10</p>
+                            <p style="color: #2e7d32; font-size: 13px; margin: 4px 0;">• Timeline consistency: Fixed ✅</p>
+                        </div>
+                        
+                        <div class="action-buttons" style="margin-top: 20px;">
+                            <button class="btn btn-success">Cleanup Complete! 🎉</button>
+                            <button class="btn btn-secondary">View Report</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="action-buttons">
+                <button class="btn btn-secondary" onclick="showPhase(5)">← Back to Insights</button>
+                <button class="btn btn-success" style="background: linear-gradient(135deg, #27c93f 0%, #22a434 100%);">Reputation Reclaimed! ✨</button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function showPhase(phase) {
+            // Update active step
+            document.querySelectorAll('.step').forEach((step, index) => {
+                step.classList.toggle('active', index + 1 === phase);
+            });
+            
+            // Update active phase detail
+            document.querySelectorAll('.phase-detail').forEach((detail, index) => {
+                detail.classList.toggle('active', index + 1 === phase);
+            });
+            
+            // Smooth scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
